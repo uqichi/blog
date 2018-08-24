@@ -23,7 +23,7 @@ deploy:
 server:
 	@hugo server -wD
 
-.PHONY: help
+.PHONY: help ## Show help
 help:
 	@printf "Tools for \'$(notdir $(shell pwd))\' project.\\n\\nUsage:\\n\\n\\tmake command\\n\\nThe commands are:\\n\\n"
 	@cat Makefile | grep '.PHONY' | grep '##' | grep -v '@cat' | tr '.PHONY:' ' ' | tr '##' ' '
