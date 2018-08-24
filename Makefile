@@ -1,4 +1,5 @@
 POSTS      := $(wildcard content/posts/*.md)
+POST_FILE  := `date +'%y%m%d%H%M%S'`
 
 .DEFAULT_GOAL := help
 
@@ -8,11 +9,19 @@ list:
 
 .PHONY: post ## Add new post
 post:
-	@hugo new "posts/"`date +'%y.%m.%d-%H.%M.%S'`.md
+	@read -p "Enter post name: " f; \
+	if [ -z $${f} ]; then FILE="posts/$(POST_FILE).md"; \
+	else FILE="posts/$${f}.md"; \
+	fi; \
+	hugo new $${FILE}
 
 .PHONY: deploy ## Deploy posts
 deploy:
 	@sh deploy.sh
+
+.PHONY: server ## Run local server
+server:
+	@hugo server -wD
 
 .PHONY: help
 help:
