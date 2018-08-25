@@ -136,9 +136,11 @@ https://help.github.com/articles/setting-up-a-www-subdomain/
 
 Aレコードの時と同じように、レジストラ（お名前.com）のDNS設定で、`CNAME`レコードを追加します。
 
+Github Pagesサイトをホスティングしてるrepositoryのドメイン `YOUR-GITHUB-USERNAME.github.io` を`www.xxxxx.com`に向けます。以下のような感じ。
+
 ![](https://www.dropbox.com/temp_thumb_from_token/s/aybl0dxzp0qjhtk?size_mode=4&preserve_transparency=true&size=1600x1200)
 
-これまた羽根井までに、時間かかるので気長に待ちます。
+これまた反映までに、時間かかるので気長に待ちます。
 
 `watch dig www.xxxxx.com +nostats +nocomments +nocmd`
 
@@ -148,7 +150,7 @@ Aレコードの時と同じように、レジストラ（お名前.com）のDNS
 ; <xxxxx.com<>> DiG 9.10.6 <<>> www.xxxxx.com +nostats +nocomments +nocmd
 ;; global options: +cmd
 ;www.xxxxx.com.			IN	A
-www.xxxxx.com.		3566	IN	CNAME	xxxxx.github.io.
+www.xxxxx.com.		3566	IN	CNAME	YOUR-GITHUB-USERNAME.github.io.
 xxxxx.github.io.	277	IN	CNAME	sni.github.map.fastly.net.
 sni.github.map.fastly.net. 2795	IN	A	185.199.111.153
 sni.github.map.fastly.net. 2795	IN	A	185.199.108.153
