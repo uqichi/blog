@@ -2,13 +2,13 @@ baseURL = "https://uqichi.net/"
 languageCode = "ja"
 title = "木偶ろぐ"
 theme = "hugo-theme-cactus-plus"
-googleAnalytics = "your_google_analytics_id"
+googleAnalytics = "UA-124597333-1"
 # Set the value to true if your site include CJK (Chinese, Japanese, and Korean languages) characters
 hasCJKLanguage = false
 
 [params]
 	author = "yukichi"
-	description = "webエンジニアのブログです。"
+	description = "GoとかAWSやってるwebエンジニアのブログです。"
 	bio = "隠居したい。"
 
 	twitter = "uqichi"
