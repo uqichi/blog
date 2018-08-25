@@ -51,6 +51,18 @@ Githubのrepositoryに静的ファイルをおくだけでweb pageを公開で�
 
 ## 短所
 
+**画像を入れる場合は面倒なことも..**
+
+ローカルでmdファイル書いて、アップロードとする場合に画像を挿入したいこと必ずあると思います。
+
+そんな時に、画像ファイルがローカルにあるものを使っていると、いざ公開サイトを確認した時に表示されない問題が発生するはずです。
+
+なので、一度リモートのどこかに画像をアップロードして、記事ファイル内ではそのURLを参照させるする必要があります。
+
+僕はこんな面倒なことしたくないので、[Paper – Dropbox](https://www.dropbox.com/ja/paper)で記事を書き、エクスポートしたものを、配信ディレクトリに入れるという運用にする予定です。（詳しくは後述）
+
+この場合、画像はDropboxPaperがクラウドにホスティングしたもののURLを参照することになります。
+
 **利用制約がある**
 
 無料だから仕方ない。とはいえ、これから始めるブログビギナーにとってはあってないようなもの。
@@ -78,7 +90,7 @@ https://help.github.com/articles/what-is-github-pages/#usage-limits
 まるめて、月におよそ100万PVまで。デイリーだと、33,333PV。
 デイリーで一人当たり平均3PVとすると、11,111人が見ることのできるサイトとなります。
 
-まあ1万人も読者が増えたら、その時にはちゃんと有料のレンタルサーバー借りて移行しましょう 😎
+まあ1万人も読者が増えたら、その時にはちゃんと有料のレンタルサーバー借りて移行しましょう😎
 ブログではなくECサイトなど商用利用する際はちょっと厳しくなってくるんじゃないかな。 
 
 
@@ -161,14 +173,49 @@ https://github.com/uqichi/hugo-theme-cactus-plus
 
 
 # ブログの運用方法
-## どのエディタを使うか
+## Dropbox Paperを使って記事を管理
 
-Dropbox Paperを使って書いて、mdファイルとしてエクスポートして運用していくことにする。
+僕は普段から[Dropbox Paper](https://www.dropbox.com/ja/paper)を活用していて、身の回りのメモや書評、勉強ノートなどにしている。
 
-MacDownも迷ったが、こちらはmac専用のデスクトップアプリ。複数端末で同期取れるメリットを優先しPaperに決定。
-一応、出力ファイルをデプロイして表示確認してみたところ両者問題なかった。
+今回のブログの運用にも、相性が良さそう。
 
-色々使ったことあるので、Markdown対応エディタの比較記事も今度描こうとおもう。
+**手順**
+
+1. 記事を書く(Paperは現在ブラウザかスマホアプリのみ対応）
+2. mdファイルとしてエクスポート
+3. front-matterを追加（現状、手動）
+4. 配信ディレクトリに納める
+5. デプロイする
+
+>Paperは現在ブラウザかスマホアプリのみ対応
+
+**余談ですが、TwitterのDropboxのサポートに投げてみた**
+
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr"><a href="https://twitter.com/Dropbox?ref_src=twsrc%5Etfw">@Dropbox</a> I hope the paper to sync my contents with my PC...</p>&mdash; ゆきち (@uqichi) <a href="https://twitter.com/uqichi/status/1032922233126047745?ref_src=twsrc%5Etfw">2018年8月24日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+数分で返信きて親切。てか、**Twitter Cardの埋め込みできるんだー!**
+
+```
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr"><a href="https://twitter.com/Dropbox?ref_src=twsrc%5Etfw">@Dropbox</a> I hope the paper to sync my contents with my PC...</p>&mdash; ゆきち (@uqichi) <a href="https://twitter.com/uqichi/status/1032922233126047745?ref_src=twsrc%5Etfw">2018年8月24日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+```
+
+**Paperの使い方**
+
+Dropbox Paperでは以下のようなディレクトリ構成にしてます。
+![Draft/Published/](https://www.dropbox.com/temp_thumb_from_token/s/uaxuk3d564avyqn?size_mode=4&preserve_transparency=true&size=1600x1200)
+
+- `Draft/` 下書きをここで書く。
+- `Draft/Published/` デプロイ（記事公開）したらここにファイルを移動する。
+
+**その他のMarkdownエディタ選択肢**
+
+BearやMacDownも迷ったが、こちらはデスクトップアプリ。
+
+複数端末で同期取れるメリットや本記事上の方で言及した画像URL問題を優先し、Paperに決定。
+
+一応、BearやMacDownでも、エクスポートした出力ファイルをデプロイして、表示確認してみたところでは問題なかった。
 
 
 ## 運用をもっと簡単にする
