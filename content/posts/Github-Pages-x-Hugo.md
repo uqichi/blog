@@ -1,7 +1,7 @@
 ---
 title: "エンジニアブログ作るならGithub Pages x Hugoがおすすめ"
 date: 2018-08-25T14:20:11+09:00
-tags: [""]
+tags: ["github","hugo","markdown","homepage"]
 categories: [""]
 draft: false
 ---
