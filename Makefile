@@ -3,28 +3,27 @@ POST_FILE  := `date +'%y%m%d%H%M%S'`
 
 .DEFAULT_GOAL := help
 
-.PHONY: list ## List all posts
-list:
+.PHONY: list
+list: ## List all posts
 	@$(foreach val, $(POSTS), echo $(notdir $(val));)
 
-.PHONY: post ## Add new post
-post:
+.PHONY: post
+post: ## Add new post
 	@read -p "Enter post name: " f; \
 	if [ -z $${f} ]; then FILE="posts/$(POST_FILE).md"; \
 	else FILE="posts/$${f}.md"; \
 	fi; \
 	hugo new $${FILE}
 
-.PHONY: deploy ## Deploy posts
-deploy:
+.PHONY: deploy
+deploy: ## Deploy posts
 	@sh deploy.sh
 
-.PHONY: server ## Run local server
-server:
+.PHONY: server
+server: ## Run local server
 	@hugo server -wD
 
-.PHONY: help ## Show help
-help:
-	@printf "Tools for \'$(notdir $(shell pwd))\' project.\\n\\nUsage:\\n\\n\\tmake command\\n\\nThe commands are:\\n\\n"
-	@cat Makefile | grep '.PHONY' | grep '##' | grep -v '@cat' | tr '.PHONY:' ' ' | tr '##' ' '
+.PHONY: help
+help: ## Show help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
