@@ -19,6 +19,10 @@ post: ## Add new post
 deploy: ## Deploy posts
 	@sh deploy.sh
 
+.PHONY: pull
+pull: ## Pull changes
+	@sh pull.sh
+
 .PHONY: server
 server: ## Run local server
 	@hugo server -wD
