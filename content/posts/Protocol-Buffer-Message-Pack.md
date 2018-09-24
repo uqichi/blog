@@ -8,9 +8,9 @@ draft: false
 
 **TL;DR**
 
-だいたい使い方や結果わかっているけれど、自分なりに触って、実際にみてみるのが目的。
+恥ずかしながらProtocol BufferとMessage Pack触ったことない..。
 
-あくまで違いとベンチマークの比較を記事にするので、それぞれの使い方については詳細は省略。
+ので、実際に触ってみて、自分なりにみて考えるみるのが目的。
 
 コードはこちら https://github.com/uqichi/go-protobuf-msgpack
 
@@ -73,6 +73,139 @@ proto3は、 `required` オプションの指定ができなくなっていた�
 
 また、proto3の新機能としてJSONへのマッピングが可能。
 
+# Protocol Bufferの使い方
+## IDLを定義する
+必要なツール群をインスコ
+
+```
+brew install protobuf
+go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+```
+	
+`.proto`ファイルを作成
+
+```
+syntax = "proto3";
+
+package proto;
+
+message Product {
+    uint64 id = 1;
+    string name = 2;
+    string description = 3;
+    int32 price = 4;
+    repeated string colors = 5;
+}
+
+message ProductList {
+    repeated Product products = 1;
+}
+```
+
+コンパイルしてシリアライザのコードを生成
+
+```
+mkdir -p proto
+protoc --go_out=proto *.proto
+```
+
+https://github.com/uqichi/go-protobuf-msgpack/blob/master/proto/product.pb.go が生まれました。
+
+簡単にAPIを実装してみる
+
+```
+package main
+
+import (
+	"log"
+	"net/http"
+
+	"github.com/golang/protobuf/proto"
+	_proto "github.com/uqichi/go-protobuf-msgpack/proto"
+)
+
+func main() {
+	http.HandleFunc("/protobuf", handlerProtobuf)
+
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func handlerProtobuf(w http.ResponseWriter, r *http.Request) {
+	p := &_proto.Product{
+		Id:          191919191919,
+		Name:        "FIFA World Cup Soccer Ball",
+		Description: "Lorem ipsum dolor sit amet,,,",
+		Price:       18900,
+		Colors:      []string{"red", "yello", "blue"},
+	}
+
+	res, err := proto.Marshal(p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/protobuf")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
+```
+
+# Message Packの使い方
+続いて、Message Packも実装してみます。
+
+ライブラリは複数あるようですが、今回は `github.com/vmihailenco/msgpack` を使っています。
+
+```
+package main
+
+import (
+	"log"
+	"net/http"
+
+	"github.com/vmihailenco/msgpack"
+)
+
+func main() {
+	http.HandleFunc("/protobuf", handlerProtobuf)
+
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+type product struct {
+	Id          int64
+	Name        string
+	Description string
+	Price       int32
+	Colors      []string
+}
+
+func handlerMsgpack(w http.ResponseWriter, r *http.Request) {
+	p := &product{
+		Id:          191919191919,
+		Name:        "FIFA World Cup Soccer Ball",
+		Description: "Lorem ipsum dolor sit amet,,,",
+		Price:       18900,
+		Colors:      []string{"red", "yello", "blue"},
+	}
+
+	res, err := msgpack.Marshal(p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/x-msgpack")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
+```
+
+Protocol Bufferと比べて、IDLがないので、シリアライズする実装のみ書けば使える。
 
 # Protocol BufferとMessage Packのテストコード
 
@@ -120,8 +253,37 @@ https://github.com/uqichi/go-protobuf-msgpack/blob/master/serialize_bench_test.g
     Content-Length: 563
 
 serialize/deserializeの速度、データ長どちらもprotocol bufferの勝利となってしまった。
+うーん。なんでだ...
 
 条件を変えればmessage packに軍配が上がるのだろうけど、今回はこういったシンプルな条件でやってみた。
 
-今度また再試験してみよう。
+今度また再実験してみよう。
 
+# まとめと所感
+Protocol Buffer, Message Pack, JSONを比較してみたわけだが、それぞれ使い所がありそう。
+
+Protocol BufferとMessage PackがJSONより高速で軽いからといって、JSONが使えないことは決してなく、例えば外向けのAPIを提供する場合なんかはJSONが使われるのがもっとも効率的だと思う。
+
+コンパイラ要らないし、読みやすい。 
+また、デバッグがしやすいというのもJSONの強み。バイナリ化されると普通は読めないのでHTTP Clientによる開発にはやはりJSONが返却された方がやりやすい。
+逆に、Message Pack使うと結構大変そうだ。
+
+Protocol
+BufferのIDLは多言語間でのデータのやり取りをする上でかなり役にたつ。近年はAPIサーバーを立てて、web・iOSアプリ・Androidアプリがぶら下がってるようなプロジェクト構成が一般的になりつつあるので、IDLによって構造を定義し、互換性のあるデータの交換やドキュメントにもなりうるのはとても嬉しい。
+フィールド名も抽象化されるため、簡単にrenameできるし型変更だって容易。
+Message Packにも、proto3からJSONにもコンパイルできるということなのでこれを使わない手はない。
+
+Message Packは手軽に使えるというのが利点、なのかな。これは、IDLみたいなスキーマ定義がないということの裏返しになる。
+スキーマがはっきりしないもの、構造化や正規化が難しいものには相性が良いみたい。
+アプリケーションログなんかをファイルに書き出してやるとか。
+データストアだと、RedisみたいなKVSとかドキュメント指向のMongoDBとかは、いいお友達になれるんじゃないか。
+
+一番大きい違いと使い所の見極めは、**スキーマ定義をするかしないか**だと思いました。
+
+するならProtocol Bufferは絶対使った方がいい。
+
+しないなら、JSONかMessage Pack。JSONは可読性が高く扱いやすいし汎用的。MessagePackは高速で軽い。
+
+って感じかー。
+
+結局Protocol Buffer使うのが最良なんじゃないという結論に落ち着いたので、次回はgRPCを試してみようと思う。
