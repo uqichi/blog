@@ -1,6 +1,6 @@
 ---
 title: "GolangにおけるGenericsについて考えることでみえてくるGoらしさ"
-date: 2018-10-12T00:01:11+09:00
+date: 2018-10-11T00:01:11+09:00
 tags: ["golang"]
 categories: [""]
 draft: false
