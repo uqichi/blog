@@ -1,5 +1,5 @@
 ---
-title: "Mercari Tech Conf 2018 に参加して感じたテックカンパニーの熱"
+title: "Mercari Tech Conf 2018 に参加して見てきたテックカンパニーのマイクロサービス"
 date: 2018-10-05T21:54:14+09:00
 tags: ["勉強会"]
 categories: [""]
@@ -28,7 +28,7 @@ draft: false
 - 「mercari X」という、ブロックチェーン技術を使ったプロダクトを新発表。なういことはすべてやってる
 
 
-# 気になったセッションについて
+気になったセッションについて
 
 全部に言及すると、多すぎるので、つまむ。
 
@@ -42,7 +42,7 @@ draft: false
 
 
 
-## ★基調講演（名村さん）
+# ★基調講演（名村さん）
 
 テックカンパニーになりたいmercari。そのためにはどうすればいいか？
 
@@ -77,7 +77,7 @@ draft: false
 
 
 
-## ★基調講演（曾川 景介さん）
+# ★基調講演（曾川 景介さん）
 
 mercari Xという新プロダクトの発表があった。
 
@@ -87,7 +87,7 @@ mercari Xという新プロダクトの発表があった。
 
 
 
-## ★Microservices Platform at Mercari
+# ★Microservices Platform at Mercari
 
 中島 大一さん
 
@@ -136,7 +136,7 @@ deployに関してもterraform同様の形で、kubernates v2 providerを使っ�
 
 
 
-## ★from Monolithic to Microservices
+# ★from Monolithic to Microservices
 
 李 同輝さん
 
@@ -148,7 +148,7 @@ deployに関してもterraform同様の形で、kubernates v2 providerを使っ�
 
 
 
-## ★どうして僕らは決済処理をマイクロサービス化しようとしているのか
+# ★どうして僕らは決済処理をマイクロサービス化しようとしているのか
 
 斎藤 祐一郎 さん
 
@@ -239,7 +239,7 @@ microserviceの分散システムだと...NO
 
 
 
-## ★Listing Service: モノリスからマイクロサービスへ
+# ★Listing Service: モノリスからマイクロサービスへ
 
 森國 泰平さん
 
@@ -290,7 +290,7 @@ databaseだけは北海道においてけぼり。。しかしmysqlのportを晒
 この問題はまさにモノリシックなやつで。負の遺産とはまさにこれのことでそうか。
 
 
-## ★Web Application as a Microservice
+# ★Web Application as a Microservice
 
 杉浦 颯太さん
 
