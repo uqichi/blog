@@ -1,5 +1,5 @@
 ---
-title: "GolangにおけるGenericsについて考えることでみえてくるGoらしさ"
+title: "GolangにおけるGenericsについて考えながらGoらしさについて考えてみる"
 date: 2018-10-11T00:01:11+09:00
 tags: ["golang"]
 categories: [""]
@@ -24,42 +24,41 @@ draft: false
 
 # genericsの使い所と勘所
 
-よくある、というかもしgenericsがあったとしたら真っ先に思いつくのがマップ操作。じゃないですか？
+よくある、というかもしgenericsがあったとしたら真っ先に思いつくのがリスト操作。じゃないですか？
 
-型としてのmapではないので、リスト操作と言ったほうがしっくりくるかも。
+例えば、mapとかkeysとかsortとか、そういう奴らですね。
 
-例えばリストの各値に対して処理したものを別の（または同じ）リストに詰め直すとか、リストの各値を合計した値を返却するだとか。
+どういうものかは実装をみたほうが早いので、例としてfilter処理を実装することで比較考察してみることにします。
 
-どういうものかは実装をみたほうが早いので、例としてmapのfilter処理を実装することで比較考察してみることにします。
+# GolangでGenericsっぽく書いてみる実験
 
-なお、以下のようなパターンの実装をもとに比較します。
+filter関数は、リストの中からある条件を満たす値だけを探します。
 
+filter関数についての詳細はこちら https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+以下のようなパターンの実装をもとに比較します。
 
 - go言語（interface{}を使わない）
 - go言語（interface{}を使う）
 - [fo言語](https://github.com/albrow/fo) - An experimental language which adds functional programming features to Go
 - go言語（Go 2 Draftで提案されているもの）
 
-実装するfilter関数についてはこちら https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-
-コードは全部githubにアプしております。
+今回説明で載せるコードは全部githubにアプしております。
 
 https://github.com/uqichi/go-filter-generics
 
-[](https://github.com/albrow/fo)
-
-# interface{}を使わずに実装
+## interface{}を使わずに実装
 
 まずはシンプルにpure goで書いてみる。
 
 
     func filter(ls []int, f func(i int) bool) []int {
       ret := make([]int, 0)
-        for _, v := range ls {
-          if f(v) {
-            ret = append(ret, v)
-          }
+      for _, v := range ls {
+        if f(v) {
+          ret = append(ret, v)
         }
+      }
       return ret
     }
 
@@ -88,9 +87,9 @@ https://github.com/uqichi/go-filter-generics
     func filterInt(ls []int, f func(i int) bool) []int {
       ret := make([]int, 0)
         for _, v := range ls {
-          if f(v) {
-            ret = append(ret, v)
-          }
+        if f(v) {
+          ret = append(ret, v)
+        }
       }
       return ret
     }
@@ -98,9 +97,9 @@ https://github.com/uqichi/go-filter-generics
     func filterString(ls []int, f func(s string) bool) []string {
       ret := make([]string, 0)
         for _, v := range ls {
-          if f(v) {
-            ret = append(ret, v)
-          }
+        if f(v) {
+          ret = append(ret, v)
+        }
       }
       return ret
     }
@@ -110,11 +109,11 @@ https://github.com/uqichi/go-filter-generics
 **どうにかならないものか！**
 
 
-# interface{}を使って実装
+## interface{}を使って実装
 
-さて、こうなってくると共通化したくなる欲がムラムラと湧いてきます。
+さて、こうなってくると共通化したい欲がムラムラと湧いてきます。
 
-interface{}でどうにかならないか。
+`interface{}` でどうにかならないか。
 
 
     func filterWithIface(ls interface{}, f interface{}) interface{} {
@@ -125,15 +124,15 @@ interface{}でどうにかならないか。
     
       for i := 0; i < lsVal.Len(); i++ {
         b := fVal.Call([]reflect.Value{lsVal.Index(i)})[0]
-          if b.Bool() {
-            ret = reflect.Append(ret, lsVal.Index(i))
-          }
+        if b.Bool() {
+          ret = reflect.Append(ret, lsVal.Index(i))
+        }
       }
     
       return ret.Interface()
     }
 
-共通化はできた模様ですが、みるからにinterface{}だらけでこれどうなのよというかんじ。
+共通化はできた模様ですが、みるからに`interface{}`だらけでこれどうなのよというかんじ。
 
 これを使ってみると、
 
@@ -180,7 +179,7 @@ interface{}でどうにかならないか。
 **どうにもならないものか！**
 
 
-# fo言語を使って実装
+## fo言語を使って実装
 
 先日 golang.tokyo という勉強会でエウレカの臼井さんという方が紹介していたライブラリです。
 
@@ -305,7 +304,7 @@ https://play.folang.org/
 
 
 
-# Go 2 Draftのgenericsを使って実装
+## Go 2 Draftのgenericsを使って実装
 
 GenericsのDraft Designはこちら https://go.googlesource.com/proposal/+/master/design/go2draft-generics-overview.md
 
