@@ -51,28 +51,30 @@ https://github.com/uqichi/go-filter-generics
 
 まずはシンプルにpure goで書いてみる。
 
-
-    func filter(ls []int, f func(i int) bool) []int {
-      ret := make([]int, 0)
-      for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
+```go
+func filter(ls []int, f func(i int) bool) []int {
+  ret := make([]int, 0)
+  for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
     }
+  }
+  return ret
+}
+```
 
 これを使ってみると、こんな感じ。
 
+```go
+ls := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
 
-    ls := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
-    
-    res := filter(ls, func(i int) bool {
-      if i == 3 {
-        return true
-      }
-      return false
-    })
+res := filter(ls, func(i int) bool {
+  if i == 3 {
+    return true
+  }
+  return false
+})
+```
 
 結果は以下になる。
 
@@ -83,26 +85,29 @@ https://github.com/uqichi/go-filter-generics
 
 素直に筋肉を使って新たにstring用のfilterを書くことになりおます。
 
-
-    func filterInt(ls []int, f func(i int) bool) []int {
-      ret := make([]int, 0)
-        for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
+```go
+func filterInt(ls []int, f func(i int) bool) []int {
+  ret := make([]int, 0)
+    for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
     }
+  }
+  return ret
+}
+```
     
-    func filterString(ls []int, f func(s string) bool) []string {
-      ret := make([]string, 0)
-        for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
+```go
+func filterString(ls []int, f func(s string) bool) []string {
+  ret := make([]string, 0)
+    for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
     }
+  }
+  return ret
+}
+```
 
 こうして、使いたい型の数だけ関数を実直に増やしていかなければならない。
 
@@ -116,51 +121,54 @@ https://github.com/uqichi/go-filter-generics
 `interface{}` でどうにかならないか。
 
 
-    func filterWithIface(ls interface{}, f interface{}) interface{} {
-      lsVal := reflect.ValueOf(ls)
-      fVal := reflect.ValueOf(f)
-    
-      ret := reflect.MakeSlice(reflect.TypeOf(ls), 0, lsVal.Len())
-    
-      for i := 0; i < lsVal.Len(); i++ {
-        b := fVal.Call([]reflect.Value{lsVal.Index(i)})[0]
-        if b.Bool() {
-          ret = reflect.Append(ret, lsVal.Index(i))
-        }
-      }
-    
-      return ret.Interface()
+```go
+func filterWithIface(ls interface{}, f interface{}) interface{} {
+  lsVal := reflect.ValueOf(ls)
+  fVal := reflect.ValueOf(f)
+
+  ret := reflect.MakeSlice(reflect.TypeOf(ls), 0, lsVal.Len())
+
+  for i := 0; i < lsVal.Len(); i++ {
+    b := fVal.Call([]reflect.Value{lsVal.Index(i)})[0]
+    if b.Bool() {
+      ret = reflect.Append(ret, lsVal.Index(i))
     }
+  }
+
+  return ret.Interface()
+}
+```
 
 共通化はできた模様ですが、みるからに`interface{}`だらけでこれどうなのよというかんじ。
 
 これを使ってみると、
 
+```go
+li := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
+ls := []string{"a", "b", "c", "d", "e", "d", "c", "b", "a"}
 
-    li := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
-    ls := []string{"a", "b", "c", "d", "e", "d", "c", "b", "a"}
-    
-    // filter list of int
-    {
-      res := filterWithIface(li, func(i int) bool {
-        if i == 3 {
-          return true
-        }
-        return false
-      })
-      resInt := res.([]int)
+// filter list of int
+{
+  res := filterWithIface(li, func(i int) bool {
+    if i == 3 {
+      return true
     }
-    
-    // filter list of string
-    {
-      res := filterWithIface(ls, func(s string) bool {
-        if s == "c" {
-          return true
-        }
-        return false
-      })
-      resString := res.([]string)
+    return false
+  })
+  resInt := res.([]int)
+}
+
+// filter list of string
+{
+  res := filterWithIface(ls, func(s string) bool {
+    if s == "c" {
+      return true
     }
+    return false
+  })
+  resString := res.([]string)
+}
+```
 
 なんかそれらしくまとめられました。しかし、これでは以下のような理由から実用的とは言えません。
 
@@ -205,27 +213,29 @@ https://play.folang.org/
 なんとなくGOPATHを汚染したくいのでカレントディレクトリで済ませる。（folangさん、汚染って言ってすみません。）
 
 
-
-    dep init
-    dep ensure -add github.com/albrow/fo
-    go build ./vendor/github.com/albrow/fo
+```bash
+dep init
+dep ensure -add github.com/albrow/fo
+go build ./vendor/github.com/albrow/fo
+```
 
 `fo`のバイナリが生成されます。
 
 次はfolangのgenericsを使ってfilter関数を書いていきます。
 
- `main.fo` というファイルを作ります。拡張子は .**fo** !!
+`main.fo` というファイルを作ります。拡張子は .**fo** !!
 
-
-    func filter[T](ls []T, f func(T) bool) []T {
-      ret := make([]T, 0)
-      for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
+```go
+func filter[T](ls []T, f func(T) bool) []T {
+  ret := make([]T, 0)
+  for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
     }
+  }
+  return ret
+}
+```
 
 これぞジェネリクス！直感的でいい感じ。
 
@@ -233,36 +243,38 @@ https://play.folang.org/
 
 以下はこれを実行したサンプル。
 
+```go
+li := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
+ls := []string{"a", "b", "c", "d", "e", "d", "c", "b", "a"}
 
-    li := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
-    ls := []string{"a", "b", "c", "d", "e", "d", "c", "b", "a"}
-    
-    // int filter generics with fo lang
-    {
-      res := filter[int](li, func(i int) bool {
-        if i == 3 {
-          return true
-        }
-        return false
-      })
+// int filter generics with fo lang
+{
+  res := filter[int](li, func(i int) bool {
+    if i == 3 {
+      return true
     }
-    
-    // string filter generics with fo lang
-    {
-      res := filter[string](ls, func(s string) bool {
-        if s == "c" {
-          return true
-        }
-        return false
-      })
+    return false
+  })
+}
+
+// string filter generics with fo lang
+{
+  res := filter[string](ls, func(s string) bool {
+    if s == "c" {
+      return true
     }
+    return false
+  })
+}
+```
 
 結果のキャストも不要です。
 
 この `main.fo` を先ほどビルドした `fo` commandでrunします。
 
-
-    ./fo run main.fo
+```bash
+./fo run main.fo
+```
 
 と、`main.go` が生成され、実行されます。
 
@@ -272,27 +284,27 @@ https://play.folang.org/
 
 なお、生成された `main.go` の中身はどうなっているかというと、、、
 
-
-    func filter__int(ls []int, f func(int) bool) []int {
-      ret := make([]int, 0)
-      for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
+```go
+func filter__int(ls []int, f func(int) bool) []int {
+  ret := make([]int, 0)
+  for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
     }
-    
-    func filter__string(ls []string, f func(string) bool) []string {
-      ret := make([]string, 0)
-      for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
-    }
+  }
+  return ret
+}
 
+func filter__string(ls []string, f func(string) bool) []string {
+  ret := make([]string, 0)
+  for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
+    }
+  }
+  return ret
+}
+```
 
 結局、冒頭のinterface{}を使わず愚直に筋肉を使ったように、こちらも、関数利用する際に使用されているそれぞれの型に合わせてその分の関数が作られていますね。
 
@@ -313,21 +325,21 @@ GenericsのDraft Designはこちら https://go.googlesource.com/proposal/+/maste
 ※もちろんのことですが、ドラフト段階なので、動作確認はできません。ドラフトデザインに沿ったサンプル書けてるかもあやしい。。。
 
 
+```go
+contract Comparable(t T) {
+  t == t
+}
 
-    contract Comparable(t T) {
-      t == t
+func filterInGo2Draft(type T Comparable(T))(ls []T, f func(T) bool) []T {
+  ret := make([]T, 0)
+  for _, v := range ls {
+    if f(v) {
+      ret = append(ret, v)
     }
-    
-    func filterInGo2Draft(type T Comparable(T))(ls []T, f func(T) bool) []T {
-      ret := make([]T, 0)
-      for _, v := range ls {
-        if f(v) {
-          ret = append(ret, v)
-        }
-      }
-      return ret
-    }
-
+  }
+  return ret
+}
+```
 
 むむー。合ってるのかな？
 
@@ -338,8 +350,8 @@ GenericsのDraft Designはこちら https://go.googlesource.com/proposal/+/maste
 そして次に、どうみても違和感のある新参者 `contract` 。
 
 これは、folangではなかった機能で、実際に使われる型に制約を設けることができます。
-
-上の例では、「Tの型は==で比較できますよ」ってことになります。Comparableって名前のは僕が自由に定義したcontractであって、重要なのは `t == t`の部分になります。
+の
+上例では、「Tの型は==で比較できますよ」ってことになります。Comparableって名前のは僕が自由に定義したcontractであって、重要なのは `t == t`の部分になります。
 
 つまり、これまで書いた `i == 3` や  `s ==` `"``c``"` のような比較がおkですよ〜ってこと。型によってはこの==の比較ができないものがあるので、あらかじめ`contract`で縛ってやろうという算段ですね。
 
@@ -352,14 +364,16 @@ GenericsのDraft Designはこちら https://go.googlesource.com/proposal/+/maste
 使うときは以下のような感じ（になると思います自信ない）
 
 
-    li := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
-    
-    res := filterInGo2Draft(int)(li, func(i int) bool {
-      if i == 3 {
-        return true
-      }
-      return false
-    })
+```go
+li := []int{1, 2, 3, 4, 5, 4, 3, 2, 1}
+
+res := filterInGo2Draft(int)(li, func(i int) bool {
+  if i == 3 {
+    return true
+  }
+  return false
+})
+```
 
 
 はーい。以上。

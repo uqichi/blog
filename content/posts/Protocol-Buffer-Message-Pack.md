@@ -77,14 +77,14 @@ proto3は、 `required` オプションの指定ができなくなっていた�
 ## IDLを定義する
 必要なツール群をインスコ
 
-```
+```bash
 brew install protobuf
 go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
 ```
 	
 `.proto`ファイルを作成
 
-```
+```protobuf
 syntax = "proto3";
 
 package proto;
@@ -104,7 +104,7 @@ message ProductList {
 
 コンパイルしてシリアライザのコードを生成
 
-```
+```bash
 mkdir -p proto
 protoc --go_out=proto *.proto
 ```
@@ -113,7 +113,7 @@ https://github.com/uqichi/go-protobuf-msgpack/blob/master/proto/product.pb.go �
 
 簡単にAPIを実装してみる
 
-```
+```go
 package main
 
 import (
@@ -158,7 +158,7 @@ func handlerProtobuf(w http.ResponseWriter, r *http.Request) {
 
 ライブラリは複数あるようですが、今回は `github.com/vmihailenco/msgpack` を使っています。
 
-```
+```go
 package main
 
 import (

@@ -17,31 +17,36 @@ MySQL5.7のインデックス操作をメモ。
 カラムの変更などがあるときはALTER文で、インデックスの編集のみの場合はそれぞれのsyntaxで書けばいいと思います。
 
 # インデックスを作成する
-    CREATE INDEX idx_1 ON teams (created_at DESC)
+
+```sql
+CREATE INDEX idx_1 ON teams (created_at DESC)
+```
 
 or
 
-
-    ALTER TABLE teams ADD INDEX idx_2 (created_at DESC)
-
+```sql
+ALTER TABLE teams ADD INDEX idx_2 (created_at DESC)
+```
 
 # インデックスを削除する
-    DROP INDEX idx_1 ON teams
+```sql
+DROP INDEX idx_1 ON teams
+```
 
 or
 
-
-    ALTER TABLE teams DROP INDEX idx_2
-
+```sql
+ALTER TABLE teams DROP INDEX idx_2
+```
 
 # インデックス"名"を変更する
 
 MySQL5.7からできるようになりました。
 これはALTER TABLE Syntaxしか用意されてないようです。
 
-
-    ALTER TABLE teams RENAME INDEX idx_x TO idx_y
-
+```sql
+ALTER TABLE teams RENAME INDEX idx_x TO idx_y
+```
 
 # インデックスを変更する
 
@@ -53,10 +58,10 @@ ALTER TABLE構文でいうMODIFYやCHANGEをしたいみたいな。
 
 しかし、インデックスではこれはできないので、一旦DROPしてから新たにCREATEするという手順になります。
 
-
-    DROP INDEX idx_1 ON teams;
-    CREATE INDEX idx_1_after ON teams (user_id ASC, created_at DESC);
-
+```sql
+DROP INDEX idx_1 ON teams;
+CREATE INDEX idx_1_after ON teams (user_id ASC, created_at DESC);
+```
 
 参考
 
