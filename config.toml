@@ -1,79 +1,77 @@
 baseURL = "https://uqichi.net/"
 languageCode = "ja"
+defaultContentLanguage = "ja"
 title = "キチログ"
-theme = "hugo-theme-cactus-plus"
+theme = "hermit"
+# enableGitInfo = true
+pygmentsCodefences  = true
+pygmentsUseClasses  = true
+hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
+rssLimit = 10  # Maximum number of items in the RSS feed.
+copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
+enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
 googleAnalytics = "UA-124597333-1"
-# Set the value to true if your site include CJK (Chinese, Japanese, and Korean languages) characters
-hasCJKLanguage = false
+# disqusShortname = "yourdiscussshortname"
+
+[author]
+  name = "Yukichi Tamura"
+
+[blackfriday]
+  # hrefTargetBlank = true
+  # noreferrerLinks = true
+  # nofollowLinks = true
+
+[taxonomies]
+  tag = "tags"
+  # Categories are disabled by default.
 
 [params]
-	author = "uqichi"
-	description = "GoとかAWSやってるwebエンジニアのブログです。"
-	bio = "隠居したい。"
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
 
-	twitter = "uqichi"
-	#facebook = ""
+  # Metadata mostly used in document's head
+  description = "Golang使ってアプリケーション書いたりAWS使ってインフラ構築したりしているwebエンジニアのブログです。"
+  # images = [""]
+  themeColor = "#494f5c"
 
-	enableRSS = true
-	enableToc = true
+  homeSubtitle = "隠居したい"
+  footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+  # bgImg = ""  # Homepage background-image URL
 
-	enableDisqus = false
-	disqusShortname = "your_disqus_short_name"
+  # Prefix of link to the git commit detail page. GitInfo must be enabled.
+  # gitUrl = "https://github.com/username/repository/commit/"
 
+  # Toggling this option needs to rebuild SCSS, requires Hugo extended version
+  justifyContent = false  # Set "text-align: justify" to `.content`.
 
-	enableSummary = true
-	# Set the value to true if use description in post front matter replace content summary
-	useDescriptionReplaceSummary = true
+  # Add custom css
+  # customCSS = ["css/foo.css", "css/bar.css"]
 
+  # Social Icons
+  # Check https://github.com/Track3/hermit#social-icons for more info.
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/uqichi"
 
-	enableGoogleAnalytics = true
-	enableBaiduAnalytics = false
-	# Set the value to your baidu analysis code if you want to use baidu analytics
-	#baiduAnalytics = 'your_baidu_analysis_code'
+  [[params.social]]
+    name = "instagram"
+    url = "https://instagram.com/uqichi"
 
-	enableTwitterCard = true
-	# The url for twitter card image, default is avatar.png in static/images directory
-	twitterCardImage = ""
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/uqichi"
 
-	# Add custom assets with their paths relative to the static folder
-	customCSS = []
-	customJS  = []
+[menu]
 
-	# The variables below are optionally too and can be used to
-	# translate or customize each string of the theme.
+  [[menu.main]]
+    name = "Posts"
+    url = "posts/"
+    weight = 10
 
-	# Navigation links
-	home = ""
-	about = ""
-	archive = ""
-	subscribe = ""
+  [[menu.main]]
+    name = "About"
+    url = "about/"
+    weight = 20
 
-	olderPosts = ""
-	newerPosts = ""
-	copyright = ""
-
-	# show latest posts in single page
-	showLatestPosts = false
-	readMore = ""
-
-	# Share
-	enableShare = true
-	tweet = ""
-	share = ""
-
-	# 404 page
-	title404 = ""
-	subtitle404 = ""
-
-	# Choose a font for the social icons in the footer. Either "mono-social" or "font-awesome"
-	iconFont = "font-awesome"
-
-	# The social icons can be styled differently if you use mono as font - circle, rounded, or empty
-	socialIconStyle = ""
-
-
-# Add additional social link entries underneath
-[social]
-	#facebook-square = "https://www.facebook.com/"
-	twitter-square = "https://www.twitter.com/uqichi"
-	github-square = "https://www.github.com/uqichi"
