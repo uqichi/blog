@@ -9,7 +9,7 @@ list: ## List all posts
 
 new: ## Add new post
 	@test -n "$(FILE)"
-	hugo new $(FILE)
+	hugo new posts/$(FILE).md
 
 edit: ## Edit specific post
 	@nvim `ls -d $(POSTS) | peco`
