@@ -25,7 +25,7 @@ s := "abc def xyz"
 
 fmt.Println(len(strings.Split(s, " "))
 fmt.Println(len(strings.Fields(s))
-````
+```
 
 こちらの出力結果にはどうなるでしょう？
 
@@ -39,7 +39,7 @@ s := ""
 
 fmt.Println(len(strings.Split(s, " "))
 fmt.Println(len(strings.Fields(s))
-````
+```
 
 対象を空の文字にしてみました。
 
