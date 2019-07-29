@@ -11,7 +11,7 @@ git pull origin master
 cd ..
 
 # Go To Theme folder
-cd themes/hugo-theme-cactus-plus
+cd themes/hermit
 # Pull changes from git.
 git pull origin master
 
