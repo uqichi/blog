@@ -36,7 +36,7 @@ googleAnalytics = "UA-124597333-1"
   # images = [""]
   themeColor = "#494f5c"
 
-  homeSubtitle = "隠居したい"
+  homeSubtitle = "小さなドアがいっぱいあるだけだ"
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # bgImg = ""  # Homepage background-image URL
 
@@ -48,6 +48,7 @@ googleAnalytics = "UA-124597333-1"
 
   # Add custom css
   # customCSS = ["css/foo.css", "css/bar.css"]
+  customCSS = ["css/my.css"]
 
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
