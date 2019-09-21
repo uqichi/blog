@@ -1,26 +1,20 @@
 POSTS := $(wildcard content/posts/*.md)
 
-.PHONY: list new edit deploy pull server help
+.PHONY: list new edit upmod server help
 
 .DEFAULT_GOAL := help
 
-list: ## List all posts
+list: ## List posts
 	@$(foreach val, $(POSTS), echo $(notdir $(val));)
 
 new: ## Add new post
-	@test -n "$(FILE)"
-	hugo new posts/$(FILE).md
+	@test -n "$(title)"
+	hugo new posts/$(title).md
 
-edit: ## Edit specific post
+edit: ## Edit post
 	@nvim `ls -d $(POSTS) | peco`
 
-deploy: ## Deploy posts
-	@sh deploy.sh
-
-pull: ## Pull remote changes
-	@sh pull.sh
-
-updatemodule: ## Update module to the latest version
+upmod: ## Update sub modules to the latest version
 	@git submodule update --rebase --remote
 
 server: ## Run local server including content marked as draft

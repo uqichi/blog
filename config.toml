@@ -32,11 +32,11 @@ googleAnalytics = "UA-124597333-1"
   dateformNumTime = "2006-01-02 15:04 -0700"
 
   # Metadata mostly used in document's head
-  description = "Golang使ってアプリケーション書いたりAWS使ってインフラ構築したりしているwebエンジニアのブログです。"
+  description = "Software Engineer loving Go, Kubernetes and Microservice, GCP and AWS."
   # images = [""]
   themeColor = "#494f5c"
 
-  homeSubtitle = "小さなドアがいっぱいあるだけだ"
+  homeSubtitle = "Keep it simple, stupid."
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # bgImg = ""  # Homepage background-image URL
 
@@ -56,9 +56,9 @@ googleAnalytics = "UA-124597333-1"
     name = "twitter"
     url = "https://twitter.com/uqichi"
 
-  [[params.social]]
-    name = "instagram"
-    url = "https://instagram.com/uqichi"
+  #[[params.social]]
+  #  name = "instagram"
+  #  url = "https://instagram.com/uqichi"
 
   [[params.social]]
     name = "github"
