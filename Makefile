@@ -20,6 +20,9 @@ deploy: ## Deploy posts
 pull: ## Pull remote changes
 	@sh pull.sh
 
+updatemodule: ## Update module to the latest version
+	@git submodule update --rebase --remote
+
 server: ## Run local server including content marked as draft
 	hugo server -wD
 
