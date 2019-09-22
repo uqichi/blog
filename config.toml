@@ -1,4 +1,4 @@
-baseURL = "https://uqichi.net/"
+baseURL = "https://uqichi.net"
 languageCode = "ja"
 defaultContentLanguage = "ja"
 title = "キチログ"
@@ -46,8 +46,11 @@ googleAnalytics = "UA-124597333-1"
   # Toggling this option needs to rebuild SCSS, requires Hugo extended version
   justifyContent = false  # Set "text-align: justify" to `.content`.
 
+  relatedPosts = true  # Add a related content section to all single posts page
+
+  code_copy_button = true # Turn on/off the code-copy-button for code-fields
+
   # Add custom css
-  # customCSS = ["css/foo.css", "css/bar.css"]
   customCSS = ["css/my.css"]
 
   # Social Icons
