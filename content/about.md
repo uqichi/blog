@@ -7,8 +7,17 @@ Software Engineer in Backend and SRE, loving #Go #Kubernetes #Microservices #DDD
 
 ![gopher](https://miro.medium.com/max/3200/1*Xt_BQxZYxGrR-F0cHme0rQ.png)
 
-## Careers and Works
-Fukuoka -> Keio Univ -> CyberAgent -> HRBrain
+## Careers
+HRBrain <- CyberAgent <- Keio Univ <- Fukuoka
+
+## Works
+### Posts
+
+- [本番環境のデータをマスキング加工して安全にアクセスできる調査環境を作った \- HRBrain Blog](https://times.hrbrain.co.jp/entry/go-aws-masking-production-data)
+- [PostgreSQLのRow Level Securityを使ってマルチテナントデータを安全に扱う \- HRBrain Blog](https://times.hrbrain.co.jp/entry/postgresql-row-level-security)
+
+### Tools
+- [uqichi/go\-json\-mask: masking json string field of any structure recursively\.](https://github.com/uqichi/go-json-mask)
 
 ## Contact
-Follow me on [Twitter](https://twitter.com/uqichi)
+on [Twitter](https://twitter.com/uqichi)

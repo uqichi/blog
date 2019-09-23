@@ -13,7 +13,7 @@ new: ## Add new post
 
 newfrom: ## Add new post from file
 	@if [ -z $(title) ] || [ -z $(file) ]; then echo "Usage:\n\tmake newfrom title=? file=?"; exit 1; fi
-	@if [ -n content/posts/$(title).md ]; then echo "Error: ${PWD}/content/posts/$(title).md already exists"; exit 1; fi
+	@if [ -e content/posts/$(title).md ]; then echo "Error: ${PWD}/content/posts/$(title).md already exists"; exit 1; fi
 	@cat archetypes/posts.md $(file) > content/posts/$(title).md
 	@echo ${PWD}/content/posts/$(title).md created
 
