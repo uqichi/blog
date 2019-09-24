@@ -15,6 +15,7 @@ HRBrain <- CyberAgent <- Keio Univ <- Fukuoka
 
 - [本番環境のデータをマスキング加工して安全にアクセスできる調査環境を作った \- HRBrain Blog](https://times.hrbrain.co.jp/entry/go-aws-masking-production-data)
 - [PostgreSQLのRow Level Securityを使ってマルチテナントデータを安全に扱う \- HRBrain Blog](https://times.hrbrain.co.jp/entry/postgresql-row-level-security)
+- [メンバー紹介座談会 vol\.3（ゆきち編） \- HRBrain Blog](https://times.hrbrain.co.jp/entry/member-interview-3)
 
 ### Tools
 - [uqichi/go\-json\-mask: masking json string field of any structure recursively\.](https://github.com/uqichi/go-json-mask)
