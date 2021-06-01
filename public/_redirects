@@ -3,6 +3,12 @@
 # Redirect default Netlify subdomain to primary domain
 https://unruffled-albattani-518036.netlify.com/* https://uqichi.net/:splat 301!
 
-# はてなブログに記事移行 (2021-06-02)
+# 記事移行 (2021-06-02)
 /posts /posts
+# Qiita
+/posts/show-dialog-on-macos/ https://qiita.com/uqichi/items/180d9a5ad661268e0007
+/posts/open-dictionary-on-macos/ https://qiita.com/uqichi/items/26ab5a592ed1cea02a05
+/posts/java-se-jdk-jre/ https://qiita.com/uqichi/items/3a4594645b3aef7a98b7
+/posts/ https://qiita.com/uqichi/items/643eed88f59bd2b44d71
+# はてなブログ
 /posts/* https://uqichi.hatenablog.com/entry/:splat 301!
