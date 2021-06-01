@@ -4,4 +4,5 @@
 https://unruffled-albattani-518036.netlify.com/* https://uqichi.net/:splat 301!
 
 # はてなブログに記事移行 (2021-06-02)
+/posts /posts
 /posts/* https://uqichi.hatenablog.com/entry/:splat 301!
